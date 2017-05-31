@@ -36,6 +36,7 @@ class PageController extends Controller
                 ]
                 );*/
          //return view('staff')->with('staff', $this->data)->with('title', 'Il nostro staff');
-         return view('staff')->withStaff($this->data)->withTitle('Il nostro staff');
+         //$this->data = [];
+         return view('staffb')->withStaff($this->data)->withTitle('Il nostro staff');
     }
 }
