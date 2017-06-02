@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\Album;
+use App\Models\Photo;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +21,20 @@ Route::get('/welcome/{name?}/{lastname?}/{age?}', 'WelcomeController@welcome')->
     'lastname' => '[a-zA-Z]+',
     'age' => '[0-9]{1,3}'
 ]);
+Route::get('/albums', function(){
+    return Album::all();
+    
+});
 
+Route::get('/photos', function(){
+    return Photo::all();
+    
+});
+
+Route::get('/users', function(){
+    return \App\User::all();
+    
+});
 
 
 /*

@@ -10,7 +10,10 @@
 | database. Just tell the factory how a default model should look.
 |
 */
-
+use Carbon\Carbon;
+use App\Models\Album;
+use App\User;
+use App\Models\Photo;
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -20,5 +23,24 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Models\Album::class, function (Faker\Generator $faker) {
+    
+    return [
+        'album_name' => $faker->name,
+        'description' => $faker->text(128),
+        'user_id' => User::inRandomOrder()->first()->id
+    ];
+});
+
+$factory->define(App\Models\Photo::class, function (Faker\Generator $faker) {
+    
+    return [
+        'album_id' => Album::inRandomOrder()->first()->id,
+        'name' => $faker->text(64),
+        'description' => $faker->text(128),
+        'img_path' => $faker->imageUrl(640, 480, $faker->randomElement(['cats', 'abstract', 'animals', 'business', 'city', 'food', 'fashion', 'sports', 'technics', 'transport']))
     ];
 });
