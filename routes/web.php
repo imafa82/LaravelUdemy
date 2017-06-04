@@ -22,8 +22,10 @@ Route::get('/welcome/{name?}/{lastname?}/{age?}', 'WelcomeController@welcome')->
     'age' => '[0-9]{1,3}'
 ]);
 Route::get('/albums', 'AlbumsController@index');
-
+Route::get('/albums/{id}/edit', 'AlbumsController@edit');
 Route::delete('/albums/{id}', 'AlbumsController@delete');
+
+Route::patch('/albums/{id}', 'AlbumsController@store');
 
 Route::get('/albums/{id}', 'AlbumsController@show');
 

@@ -21,7 +21,7 @@ class AlbumsController extends Controller
         }
         $albums = DB::select($sql, $where);
         //var_dump($albums);
-        return view('albums', ['albums' => $albums]);
+        return view('albums.albums', ['albums' => $albums]);
     }
     
     public function delete($id){
@@ -30,9 +30,25 @@ class AlbumsController extends Controller
         //return redirect()->back();
     }
     
+    public function edit($id){
+        $sql = 'SELECT id, album_name, description FROM albums WHERE id = :id';
+        $album = DB::select($sql, ['id'=> $id]);
+        
+        return view('albums.edit')->with('album', $album[0]);
+    }
+    
     public function show($id){
         $sql = "SELECT * FROM albums WHERE id= :id";
         return DB::select($sql, ['id' => $id]);
         //return redirect()->back();
+    }
+    
+      public function store(Request $request, $id){
+          $data = request()->only(['name', 'description']);
+          $data['id'] = $id;
+          $sql = 'UPDATE albums SET album_name=:name, description=:description';
+          $sql .= ' WHERE id=:id';
+          $res = DB::update($sql, $data);
+          dd($res);
     }
 }
