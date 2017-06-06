@@ -9,7 +9,7 @@ class AlbumsController extends Controller
 {
     public function index(Request $request){
        // return Album::all();
-        $queryBuilder = DB::table('albums')->orderBy('id', 'DESC');
+        $queryBuilder = Album::orderBy('id', 'DESC');
         if($request->has('id')){
             $queryBuilder->where('id', $request->input('id'));
         }
@@ -35,16 +35,17 @@ class AlbumsController extends Controller
     }
     
     public function delete($id){
-        $res = DB::table('albums')->where('id', $id)->delete();
-        return $res;
+        //$res = Album::where('id', $id)->delete();
+        $res = Album::find($id)->delete();
+        return "".$res;
         //return redirect()->back();
     }
     
     public function edit($id){
-        $sql = 'SELECT id, album_name, description FROM albums WHERE id = :id';
-        $album = DB::select($sql, ['id'=> $id]);
-        
-        return view('albums.edit')->with('album', $album[0]);
+//        $sql = 'SELECT id, album_name, description FROM albums WHERE id = :id';
+//        $album = DB::select($sql, ['id'=> $id]);
+        $album = Album::find($id);
+        return view('albums.edit')->with('album', $album);
     }
     
     public function show($id){
@@ -54,11 +55,15 @@ class AlbumsController extends Controller
     }
     
       public function store(Request $request, $id){
-          $res =DB::table('albums')->where('id', $id)->update(
-                  ['description' => request()->input('description'),
-                  'album_name' => request()->input('name')]
-                  
-                  );
+//          $res = Album::where('id', $id)->update(
+//                  ['description' => request()->input('description'),
+//                  'album_name' => request()->input('name')]
+//                  
+//                  );
+          $album = Album::find($id);
+          $album->album_name = request()->input('name');
+          $album->description = request()->input('description');
+          $res = $album->save();
           
 //          $data = request()->only(['name', 'description']);
           $nome = request()->get('name');
@@ -76,14 +81,20 @@ class AlbumsController extends Controller
         return view('albums.create');
     }
     public function save(){
-         $res =DB::table('albums')->insert(
-                  ['description' => request()->input('description'),
-                  'album_name' => request()->input('name'),
-                      'user_id' => 1
-                 
-                 ]
-                  
-                  );
+//         $res =Album::insert(
+//                  ['description' => request()->input('description'),
+//                  'album_name' => request()->input('name'),
+//                      'user_id' => 1
+//                 
+//                 ]
+//                  
+//                  );
+        $album = new Album();
+        $album->album_name = request()->input('name');
+        $album->description = request()->input('description');
+        $album->user_id = 1;
+        $res = $album->save();
+        
 //        $data = request()->only(['name', 'description']);
 //        $data ['user_id'] = 1;
 //        $sql = 'INSERT INTO albums (album_name, description, user_id)';
