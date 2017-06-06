@@ -2,6 +2,12 @@
 
 @section('content')
 <h1>Albums</h1>
+
+@if(session()->has('message'))
+    @component('components.alert-info')
+        {{ session()->get('message') }}
+    @endcomponent
+@endif
 <form>
     <input type="hidden" name='_token' id="_token" value="{{csrf_token()}}">
 <ul class="list-group">
@@ -21,12 +27,13 @@
 @parent
     <script>
         $(document).ready(function(){
+            $('div.alert').fadeOut(5000);
             $('ul').on('click', 'a.btn-danger', function(ele){
                 ele.preventDefault();
                 var urlAlbum = ele.target.href;
                 console.log(urlAlbum);
-                //var li = ele.target.parentNode;
-                var li = $(this).parent();
+                //var li = ele.target.parentNode.parentNode;
+                var li = $(this).parent().parent();
                
                 $.ajax(urlAlbum, {
                     method: "DELETE",
