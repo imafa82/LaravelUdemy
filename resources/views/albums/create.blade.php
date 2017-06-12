@@ -1,7 +1,7 @@
 @extends('templates.default')
 
 @section('content')
-<h1>Update</h1>
+<h1>New Album</h1>
 <form action="{{route('album.save')}}" method="POST">
     {{csrf_field()}}
     <div class="form-group">
