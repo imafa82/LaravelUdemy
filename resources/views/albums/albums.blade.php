@@ -16,7 +16,7 @@
         {{$album->album_name}} 
         <div>
             @if($album->album_thumb)
-                <img src="{{$album->album_thumb}}" alt="{{$album->album_name}}" title="{{$album->album_name}}">
+                <img src="{{$album->path}}" alt="{{$album->album_name}}" title="{{$album->album_name}}">
             @endif
             <a href="/albums/{{$album->id}}/edit" class="btn btn-primary">Edit</a> 
             <a href="/albums/{{$album->id}}" class="btn btn-danger">Delete</a>

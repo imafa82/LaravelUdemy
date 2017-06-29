@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 class AlbumsController extends Controller
 {
     public function index(Request $request){
@@ -34,9 +35,16 @@ class AlbumsController extends Controller
 //        return view('albums.albums', ['albums' => $albums]);
     }
     
-    public function delete($id){
+    public function delete(Album $id){
         //$res = Album::where('id', $id)->delete();
-        $res = Album::find($id)->delete();
+        //$res = Album::find($id)->delete();
+        $thumbNail = $id->album_thumb;
+        $res = $id->delete();
+        if($res){
+            if ($thumbNail && Storage::disk('public')->has(env('ALBUM_THUMB_DIR')."/".$thumbNail)){
+                Storage::disk('public')->delete(env('ALBUM_THUMB_DIR')."/".$thumbNail);
+            }
+        }
         return "".$res;
         //return redirect()->back();
     }
@@ -63,17 +71,7 @@ class AlbumsController extends Controller
           $album = Album::find($id);
           $album->album_name = request()->input('name');
           $album->description = request()->input('description');
-          if($request->hasFile('album_thumb')){
-              
-              $file = $request->file('album_thumb');
-              if($file->isValid()){
-                   //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
-                    $fileName = $id.'.'.$file->extension();
-                    $file->storeAs(env('ALBUM_THUMB_DIR'), $fileName);
-                    $album->album_thumb = $fileName;
-              }
-              
-          }
+          $this->processFile($id, $request, $album);
           $res = $album->save();
           
 //          $data = request()->only(['name', 'description']);
@@ -88,8 +86,8 @@ class AlbumsController extends Controller
     }
     
       public function create(){
-        
-        return view('albums.create');
+        $album = new Album();
+        return view('albums.create', ['album'=> $album]);
     }
     public function save(){
 //         $res =Album::insert(
@@ -103,9 +101,15 @@ class AlbumsController extends Controller
         $album = new Album();
         $album->album_name = request()->input('name');
         $album->description = request()->input('description');
+        $album->album_thumb = '';
         $album->user_id = 1;
-        $res = $album->save();
         
+        $res = $album->save();
+        if ($res){
+            if($this->processFile($album->id, request(), $album)){
+                $res = $album->save();
+            };
+        }
 //        $data = request()->only(['name', 'description']);
 //        $data ['user_id'] = 1;
 //        $sql = 'INSERT INTO albums (album_name, description, user_id)';
@@ -115,5 +119,27 @@ class AlbumsController extends Controller
           session()->flash('message', $messaggio);
         //return view('albums.create');
           return redirect()->route('albums');
+    }
+    
+    
+    private function processFile($id, $request, &$album){
+         
+         if(!$request->hasFile('album_thumb')){
+         
+             return false;
+         }    
+          $file = $request->file('album_thumb');   
+          if(!$file->isValid()){
+         
+             return false;
+         } 
+              
+                   //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
+                    $fileName = $id.'.'.$file->extension();
+                    $file->storeAs(env('ALBUM_THUMB_DIR'), $fileName);
+                    $album->album_thumb = $fileName;
+         return true;     
+              
+          
     }
 }

@@ -2,12 +2,13 @@
 
 @section('content')
 <h1>New Album</h1>
-<form action="{{route('album.save')}}" method="POST">
+<form action="{{route('album.save')}}" method="POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" class="form-control" placeholder="AlbumName" value="">
     </div>
+    @include('albums.partials.fileupload')
     <div class="form-group">
         <label for="description">Description</label>
         <textarea  name="description" id="description" class="form-control" placeholder="Descrizione"></textarea>

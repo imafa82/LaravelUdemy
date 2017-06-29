@@ -24,8 +24,8 @@ Route::get('/welcome/{name?}/{lastname?}/{age?}', 'WelcomeController@welcome')->
 Route::get('/albums', 'AlbumsController@index')->name('albums');
 Route::get('/albums/create', 'AlbumsController@create')->name('album.create');
 Route::post('/albums', 'AlbumsController@save')->name('album.save');
-Route::get('/albums/{id}/edit', 'AlbumsController@edit');
-Route::delete('/albums/{id}', 'AlbumsController@delete');
+Route::get('/albums/{id}/edit', 'AlbumsController@edit')->where('id', '[0-9]+');
+Route::delete('/albums/{id}', 'AlbumsController@delete')->where('id', '[0-9]+');
 
 Route::patch('/albums/{id}', 'AlbumsController@store');
 
