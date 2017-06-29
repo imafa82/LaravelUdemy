@@ -10,7 +10,7 @@
         <input type="text" name="name" id="name" class="form-control" placeholder="AlbumName" value="{{$album->album_name}}">
     </div>
     <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">Immagine</label>
         <input type="file" name="album_thumb" id="album_thumb" class="form-control" >
     </div>
      @if($album->album_thumb)

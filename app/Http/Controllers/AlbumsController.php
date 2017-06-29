@@ -63,6 +63,17 @@ class AlbumsController extends Controller
           $album = Album::find($id);
           $album->album_name = request()->input('name');
           $album->description = request()->input('description');
+          if($request->hasFile('album_thumb')){
+              
+              $file = $request->file('album_thumb');
+              if($file->isValid()){
+                   //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
+                    $fileName = $id.'.'.$file->extension();
+                    $file->storeAs(env('ALBUM_THUMB_DIR'), $fileName);
+                    $album->album_thumb = $fileName;
+              }
+              
+          }
           $res = $album->save();
           
 //          $data = request()->only(['name', 'description']);
