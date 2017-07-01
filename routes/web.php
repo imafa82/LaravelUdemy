@@ -31,6 +31,8 @@ Route::patch('/albums/{id}', 'AlbumsController@store');
 
 Route::get('/albums/{id}', 'AlbumsController@show')->where('id', '[0-9]+');
 
+Route::get('/albums/{id}/images', 'AlbumsController@getImages')->name('album.getimages')->where('id', '[0-9]+');
+
 Route::get('/photos', function(){
     return Photo::all();
     

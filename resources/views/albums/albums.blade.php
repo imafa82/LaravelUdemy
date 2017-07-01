@@ -18,6 +18,9 @@
             @if($album->album_thumb)
                 <img src="{{$album->path}}" alt="{{$album->album_name}}" title="{{$album->album_name}}">
             @endif
+            @if($album->photos_count)
+            <a href="/albums/{{$album->id}}/images" class="btn btn-primary">View Images({{$album->photos_count}})</a> 
+            @endif
             <a href="/albums/{{$album->id}}/edit" class="btn btn-primary">Edit</a> 
             <a href="/albums/{{$album->id}}" class="btn btn-danger">Delete</a>
         </div>

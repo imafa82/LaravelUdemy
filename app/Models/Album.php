@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Photo;
 class Album extends Model {
     //protected $table = 'Albums';
     //protected $primaryKey = 'id';
@@ -12,5 +13,9 @@ class Album extends Model {
             $url = "storage/".env('ALBUM_THUMB_DIR')."/".$this->album_thumb;
         }
         return $url;
+    }
+    
+    public function photos(){
+        return $this->hasMany(Photo::class);
     }
 }
