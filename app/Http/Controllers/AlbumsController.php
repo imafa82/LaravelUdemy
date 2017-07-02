@@ -123,7 +123,7 @@ class AlbumsController extends Controller
     }
     public function getImages(Album $id){
         $images = Photo::where('album_id', $id->id)->get();
-        return $images;
+        return view('images.albumimages', compact('id', 'images'));
     }
 
 
