@@ -49,7 +49,7 @@ Route::get('/users', function(){
     
 });
 
-
+Route::resource('photos', 'PhotosController');
 /*
         ->where('name', '[a-zA-Z]+')
         ->where('lastname', '[a-zA-Z]+');
