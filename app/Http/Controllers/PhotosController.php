@@ -74,10 +74,10 @@ class PhotosController extends Controller
         $photo->name = $request->input('name');
         $photo->description = $request->input('description');
         $res = $photo->save();
-        $messaggio = $res? "Image". request()->input('name')." update" : "Update non riusciuto";
+        $messaggio = $res? "Image". request()->input('name')." update" : "Update non riuscito";
         session()->flash('message', $messaggio);
         //return view('albums.create');
-        return redirect()->route('photos.index');
+        return redirect()->route('album.getimages', $photo->album_id);
     }
 
     /**

@@ -15,5 +15,8 @@ class Photo extends Model
         return $url;
     }
 
+    public function setNameAttribute($value){
+        $this->attributes['name'] = strtoupper($value);
+    }
 
 }

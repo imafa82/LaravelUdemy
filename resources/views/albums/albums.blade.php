@@ -16,7 +16,7 @@
         {{$album->album_name}} 
         <div>
             @if($album->album_thumb)
-                <img src="{{$album->path}}" alt="{{$album->album_name}}" title="{{$album->album_name}}">
+                <img width="120" src="{{$album->path}}" alt="{{$album->album_name}}" title="{{$album->album_name}}">
             @endif
             @if($album->photos_count)
             <a href="/albums/{{$album->id}}/images" class="btn btn-primary">View Images({{$album->photos_count}})</a> 
