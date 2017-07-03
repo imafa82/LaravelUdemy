@@ -69,7 +69,15 @@ class PhotosController extends Controller
      */
     public function update(Request $request, Photo $photo)
     {
-        dd($photo);
+
+        $this->processFile($photo);
+        $photo->name = $request->input('name');
+        $photo->description = $request->input('description');
+        $res = $photo->save();
+        $messaggio = $res? "Image". request()->input('name')." update" : "Update non riusciuto";
+        session()->flash('message', $messaggio);
+        //return view('albums.create');
+        return redirect()->route('photos.index');
     }
 
     /**
@@ -105,9 +113,9 @@ class PhotosController extends Controller
          } 
               
                    //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
-                    $fileName = $id.'.'.$file->extension();
-                    $file->storeAs(env('IMG_DIR'), $fileName);
-                    $album->img_path = $fileName;
+                    $fileName = $photo->id.'.'.$file->extension();
+                    $file->storeAs(env('IMG_DIR').'/'.$photo->album_id, $fileName);
+                    $photo->img_path = env('IMG_DIR').'/'.$photo->album_id.'/'.$fileName;
          return true;     
               
           

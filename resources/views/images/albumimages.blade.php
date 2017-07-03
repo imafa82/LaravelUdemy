@@ -1,5 +1,12 @@
 @extends('templates.default')
 @section('content')
+<h1>Images for {{$id->album_name}}</h1>
+
+@if(session()->has('message'))
+    @component('components.alert-info')
+        {{ session()->get('message') }}
+    @endcomponent
+@endif
 <table class="table">
     <tr>
         <th>
@@ -24,7 +31,7 @@
         <td>{{$image->created_at}}</td>
         <td>{{$image->name}}</td>
         <td>{{$id->album_name}}</td>
-        <td><img width="120" src="{{asset($image->img_path)}}" /></td>
+        <td><img width="120" src="{{asset($image->path)}}" /></td>
         <td>
             <a href="{{route('photos.destroy', $image->id)}}" class="btn btn-danger">DELETE</a> 
             <a href="{{route('photos.edit', $image->id)}}" class="btn btn-default">EDIT</a> 

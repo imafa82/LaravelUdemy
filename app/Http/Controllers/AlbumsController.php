@@ -142,7 +142,7 @@ class AlbumsController extends Controller
                    //$fileName = $file->store(env('ALBUM_THUMB_DIR'));
                     $fileName = $id.'.'.$file->extension();
                     $file->storeAs(env('ALBUM_THUMB_DIR'), $fileName);
-                    $album->album_thumb = $fileName;
+                    $album->album_thumb = env('ALBUM_THUMB_DIR').'/'.$fileName;
          return true;     
               
           
