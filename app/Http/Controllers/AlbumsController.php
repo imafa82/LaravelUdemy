@@ -18,7 +18,7 @@ class AlbumsController extends Controller
         if($request->has('album_name')){
             $queryBuilder->where('album_name', 'like', $request->input('album_name').'%');
         }
-        $albums = $queryBuilder->get();
+        $albums = $queryBuilder->paginate(env('IMG_FOR_PAGE'));
         return view('albums.albums', ['albums' => $albums]);
          //$sql= "select * from albums WHERE 1=1 ";
 //        $where = [];
@@ -122,7 +122,7 @@ class AlbumsController extends Controller
           return redirect()->route('albums');
     }
     public function getImages(Album $id){
-        $images = Photo::where('album_id', $id->id)->get();
+        $images = Photo::where('album_id', $id->id)->paginate(env('IMG_FOR_PAGE'));
         return view('images.albumimages', compact('id', 'images'));
     }
 

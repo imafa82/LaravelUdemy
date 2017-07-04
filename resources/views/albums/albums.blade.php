@@ -26,6 +26,13 @@
         </div>
     </li>
     @endforeach
+        <li>
+                <div class="row">
+                    <div class="col-md-8 push-2">
+                        {{$albums->links('vendor.pagination.bootstrap-4')}}
+                    </div>
+                </div>
+        </li>
 </ul>
 </form>    
 @endsection

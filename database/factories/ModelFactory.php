@@ -39,7 +39,8 @@ $factory->define(App\Models\Album::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Photo::class, function (Faker\Generator $faker) {
     
     return [
-        'album_id' => Album::inRandomOrder()->first()->id,
+        //'album_id' => Album::inRandomOrder()->first()->id,
+        'album_id' => 1,
         'name' => $faker->text(64),
         'description' => $faker->text(128),
         'img_path' => $faker->imageUrl(640, 480, $faker->randomElement(['cats', 'abstract', 'animals', 'business', 'city', 'food', 'fashion', 'sports', 'technics', 'transport']))

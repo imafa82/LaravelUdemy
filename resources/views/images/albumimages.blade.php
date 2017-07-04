@@ -44,6 +44,16 @@
         </td>
     </tr>
     @endforelse
+    <tr>
+        <td colspan="6" class="text-center">
+            <div class="row">
+                <div class="col-md-8 push-2">
+                    {{$images->links('vendor.pagination.bootstrap-4')}}
+                </div>
+            </div>
+
+        </td>
+    </tr>
 </table>
 
 @endsection
