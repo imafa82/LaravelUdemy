@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
+    protected $fillable = ['name', 'img_path', 'description'];
+
+    public function album(){
+        //$this->belongsTo(Album::class, 'album_id', 'id');
+        return $this->belongsTo(Album::class);
+    }
     //
     public function getPathAttribute(){
         $url = $this->img_path;

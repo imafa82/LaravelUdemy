@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Photo;
+use App\Models\Album;
 use Illuminate\Support\Facades\Storage;
 class PhotosController extends Controller
 {
@@ -22,9 +23,13 @@ class PhotosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        //
+        $id = $req->has('album_id')? $req->input('album_id'):null;
+        $album = Album::firstOrNew(['id'=> $id]);
+        $photo = new Photo();
+        $albums = this.$this->getAlbums();
+        return view('images.editimage', compact('album', 'photo', 'albums'));
     }
 
     /**
@@ -57,7 +62,9 @@ class PhotosController extends Controller
      */
     public function edit(Photo $photo)
     {
-        return view('images.editimage', compact('photo'));
+        $albums = $this->getAlbums();
+        $album = $photo->album;
+        return view('images.editimage', compact('album','albums','photo'));
     }
 
     /**
@@ -71,6 +78,7 @@ class PhotosController extends Controller
     {
 
         $this->processFile($photo);
+        $photo->album_id = $request->album_id;
         $photo->name = $request->input('name');
         $photo->description = $request->input('description');
         $res = $photo->save();
@@ -126,5 +134,9 @@ class PhotosController extends Controller
             return Storage::disk($disk)->delete($photo->img_path);
         }
         return false;
+    }
+
+    public function getAlbums(){
+        return Album::orderBy('album_name')->get();
     }
 }
