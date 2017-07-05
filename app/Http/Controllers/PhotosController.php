@@ -8,6 +8,12 @@ use App\Models\Album;
 use Illuminate\Support\Facades\Storage;
 class PhotosController extends Controller
 {
+    protected $rules =[
+        'album_id' => 'required',
+        'name' => 'required',
+        'description' => 'required',
+        'img_path' => 'required|image'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +34,7 @@ class PhotosController extends Controller
         $id = $req->has('album_id')? $req->input('album_id'):null;
         $album = Album::firstOrNew(['id'=> $id]);
         $photo = new Photo();
-        $albums = this.$this->getAlbums();
+        $albums = $this->getAlbums();
         return view('images.editimage', compact('album', 'photo', 'albums'));
     }
 
@@ -40,7 +46,15 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, $this->rules);
+        $photo = new Photo();
+        $photo->name = $request->input('name');
+        $photo->description = $request->input('description');
+        $photo->album_id = $request->input('album_id');
+
+        $this->processFile($photo);
+        $photo->save();
+        return redirect(route('album.getimages', $photo->album_id));
     }
 
     /**
@@ -76,7 +90,7 @@ class PhotosController extends Controller
      */
     public function update(Request $request, Photo $photo)
     {
-
+        $this->validate($request, $this->rules);
         $this->processFile($photo);
         $photo->album_id = $request->album_id;
         $photo->name = $request->input('name');

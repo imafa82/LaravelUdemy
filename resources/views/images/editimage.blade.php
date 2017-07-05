@@ -1,15 +1,27 @@
 @extends('templates.default')
 
 @section('content')
-<h1>New Album</h1>
-<form action="{{route('photos.update', $photo->id)}}" method="POST" enctype="multipart/form-data">
-    {{csrf_field()}}
-    {{method_field('PATCH')}}
+<h1>
+    @if($photo->id)
+        Update Image
+    @else
+        New Image
+    @endif
+</h1>
+@if($photo->id)
+    <form action="{{route('photos.update', $photo->id)}}" method="POST" enctype="multipart/form-data">
+
+        {{method_field('PATCH')}}
+        @else
+            <form action="{{route('photos.store')}}" method="POST" enctype="multipart/form-data">
+
+                @endif
+
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" class="form-control" placeholder="ImgName" value="{{$photo->name}}">
     </div>
-    
+                {{csrf_field()}}
     @include('images.partials.fileupload')
     <div class="form-group">
         <label for="description">Description</label>
