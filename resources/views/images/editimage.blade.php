@@ -8,6 +8,7 @@
         New Image
     @endif
 </h1>
+@include('partials.inputError')
 @if($photo->id)
     <form action="{{route('photos.update', $photo->id)}}" method="POST" enctype="multipart/form-data">
 

@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Storage;
 class PhotosController extends Controller
 {
     protected $rules =[
-        'album_id' => 'required',
-        'name' => 'required',
+        'album_id' => 'required|exists:albums,id',
+        'name' => 'required|unique:photos,name',
         'description' => 'required',
         'img_path' => 'required|image'
+    ];
+
+    protected $errorMessages = [
+        'album_id.required' => "Il campo Album è obbligatorio",
+        'name.required' => "Il campo Nome è obbligatorio"
     ];
     /**
      * Display a listing of the resource.
@@ -46,7 +51,7 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules);
+        $this->validate($request, $this->rules, $this->errorMessages);
         $photo = new Photo();
         $photo->name = $request->input('name');
         $photo->description = $request->input('description');
@@ -90,7 +95,7 @@ class PhotosController extends Controller
      */
     public function update(Request $request, Photo $photo)
     {
-        $this->validate($request, $this->rules);
+        $this->validate($request, $this->rules, $this->errorMessages);
         $this->processFile($photo);
         $photo->album_id = $request->album_id;
         $photo->name = $request->input('name');

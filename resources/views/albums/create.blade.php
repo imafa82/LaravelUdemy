@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>New Album</h1>
+@include('partials.inputError')
 <form action="{{route('album.save')}}" method="POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <div class="form-group">

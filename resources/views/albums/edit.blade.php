@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Update</h1>
+@include('partials.inputError')
 <form action="/albums/{{$album->id}}" method="POST" enctype="multipart/form-data">
     {{csrf_field()}}
     <input type="hidden" value="PATCH"  name="_method">

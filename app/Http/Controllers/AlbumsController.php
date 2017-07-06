@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlbumRequest;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Photo;
@@ -63,7 +64,7 @@ class AlbumsController extends Controller
         //return redirect()->back();
     }
     
-      public function store(Request $request, $id){
+      public function store(AlbumRequest $request, $id){
 //          $res = Album::where('id', $id)->update(
 //                  ['description' => request()->input('description'),
 //                  'album_name' => request()->input('name')]
@@ -90,7 +91,7 @@ class AlbumsController extends Controller
         $album = new Album();
         return view('albums.create', ['album'=> $album]);
     }
-    public function save(){
+    public function save(AlbumRequest $request){
 //         $res =Album::insert(
 //                  ['description' => request()->input('description'),
 //                  'album_name' => request()->input('name'),
@@ -100,8 +101,8 @@ class AlbumsController extends Controller
 //                  
 //                  );
         $album = new Album();
-        $album->album_name = request()->input('name');
-        $album->description = request()->input('description');
+        $album->album_name = $request->input('name');
+        $album->description = $request->input('description');
         $album->album_thumb = '';
         $album->user_id = 1;
         
