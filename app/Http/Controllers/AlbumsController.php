@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AlbumRequest;
+use App\Http\Requests\AlbumUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Photo;
@@ -64,7 +65,7 @@ class AlbumsController extends Controller
         //return redirect()->back();
     }
     
-      public function store(AlbumRequest $request, $id){
+      public function store(AlbumUpdateRequest $request, $id){
 //          $res = Album::where('id', $id)->update(
 //                  ['description' => request()->input('description'),
 //                  'album_name' => request()->input('name')]

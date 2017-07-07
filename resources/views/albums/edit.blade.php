@@ -8,7 +8,7 @@
     <input type="hidden" value="PATCH"  name="_method">
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="AlbumName" value="{{$album->album_name}}">
+        <input type="text" name="name" id="name" class="form-control" placeholder="Album Name" value="{{$album->album_name}}">
     </div>
     @include('albums.partials.fileupload')
     <div class="form-group">

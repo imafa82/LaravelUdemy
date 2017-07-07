@@ -7,12 +7,12 @@
     {{csrf_field()}}
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="AlbumName" value="">
+        <input type="text" name="name" id="name" class="form-control" placeholder="AlbumName" value="{{old('name')}}">
     </div>
     @include('albums.partials.fileupload')
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea  name="description" id="description" class="form-control" placeholder="Descrizione"></textarea>
+        <textarea  name="description" id="description" class="form-control" placeholder="Descrizione">{{old('description')}}</textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary" >Submit</button>
