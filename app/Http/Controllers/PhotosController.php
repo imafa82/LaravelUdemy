@@ -8,6 +8,11 @@ use App\Models\Album;
 use Illuminate\Support\Facades\Storage;
 class PhotosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected $rules =[
         'album_id' => 'required|exists:albums,id',
         'name' => 'required|unique:photos,name',

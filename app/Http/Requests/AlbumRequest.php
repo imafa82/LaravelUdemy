@@ -24,7 +24,7 @@ class AlbumRequest extends FormRequest
     public function rules()
     {
         return [
-            'album_name' => 'required|unique:albums, album_name',
+            //'album_name' => 'required|unique:albums, album_name',
             'description' => 'required',
             'album_thumb' => 'required|image',
             //'user_id' => 'required'
@@ -33,7 +33,7 @@ class AlbumRequest extends FormRequest
 
     public function messages(){
         return [
-            'album_name.required' => 'Il nome dell\'album è obbligatorio',
+           // 'album_name.required' => 'Il nome dell\'album è obbligatorio',
             'description.required' => 'La descrizione dell\'album è obbligatorio',
             'album_thumb.required' => 'L\'immagine dell\'album è obbligatorio'
         ];

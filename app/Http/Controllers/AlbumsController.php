@@ -7,13 +7,22 @@ use App\Http\Requests\AlbumUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Photo;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class AlbumsController extends Controller
 {
+    public function __construct(){
+        //$this->middleware('auth')->only(['create', 'edit']);
+        //$this->middleware('auth')->except(['index']);
+    }
     public function index(Request $request){
+
+
+
        // return Album::all();
         $queryBuilder = Album::orderBy('id', 'DESC')->withCount('photos');
+        $queryBuilder->where('user_id', Auth::user()->id);
         if($request->has('id')){
             $queryBuilder->where('id', $request->input('id'));
         }
@@ -105,7 +114,7 @@ class AlbumsController extends Controller
         $album->album_name = $request->input('name');
         $album->description = $request->input('description');
         $album->album_thumb = '';
-        $album->user_id = 1;
+        $album->user_id = $request->user()->id;
         
         $res = $album->save();
         if ($res){
