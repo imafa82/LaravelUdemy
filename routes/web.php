@@ -22,15 +22,20 @@ Route::get('/welcome/{name?}/{lastname?}/{age?}', 'WelcomeController@welcome')->
     'age' => '[0-9]{1,3}'
 ]);
 Route::get('/home', 'AlbumsController@index')->name('albums');
-Route::get('/albums', 'AlbumsController@index')->name('albums');
-Route::get('/albums/create', 'AlbumsController@create')->name('album.create');
-Route::post('/albums', 'AlbumsController@save')->name('album.save');
-Route::get('/albums/{id}/edit', 'AlbumsController@edit')->where('id', '[0-9]+');
-Route::delete('/albums/{id}', 'AlbumsController@delete')->where('id', '[0-9]+');
+Route::group(['middleware'=> 'auth'],
+    function(){
+        Route::get('/albums', 'AlbumsController@index')->name('albums');
+        Route::get('/albums/create', 'AlbumsController@create')->name('album.create');
+        Route::post('/albums', 'AlbumsController@save')->name('album.save');
+        Route::get('/albums/{id}/edit', 'AlbumsController@edit')->where('id', '[0-9]+');
+        Route::delete('/albums/{id}', 'AlbumsController@delete')->where('id', '[0-9]+');
 
-Route::patch('/albums/{id}', 'AlbumsController@store');
+        Route::patch('/albums/{id}', 'AlbumsController@store');
 
-Route::get('/albums/{id}', 'AlbumsController@show')->where('id', '[0-9]+');
+        Route::get('/albums/{id}', 'AlbumsController@show')->where('id', '[0-9]+');
+    }
+    );
+
 
 Route::get('/albums/{id}/images', 'AlbumsController@getImages')->name('album.getimages')->where('id', '[0-9]+');
 
@@ -57,4 +62,4 @@ Route::resource('photos', 'PhotosController');
  */
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
