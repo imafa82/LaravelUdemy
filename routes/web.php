@@ -21,6 +21,7 @@ Route::get('/welcome/{name?}/{lastname?}/{age?}', 'WelcomeController@welcome')->
     'lastname' => '[a-zA-Z]+',
     'age' => '[0-9]{1,3}'
 ]);
+Route::get('/home', 'AlbumsController@index')->name('albums');
 Route::get('/albums', 'AlbumsController@index')->name('albums');
 Route::get('/albums/create', 'AlbumsController@create')->name('album.create');
 Route::post('/albums', 'AlbumsController@save')->name('album.save');
@@ -54,3 +55,6 @@ Route::resource('photos', 'PhotosController');
         ->where('name', '[a-zA-Z]+')
         ->where('lastname', '[a-zA-Z]+');
  */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
