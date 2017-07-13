@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use App\Models\Album;
 class AlbumUpdateRequest extends FormRequest
 {
     /**
@@ -13,6 +13,7 @@ class AlbumUpdateRequest extends FormRequest
      */
     public function authorize()
     {
+        
         return true;
     }
 

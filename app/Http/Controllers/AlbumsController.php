@@ -65,6 +65,13 @@ class AlbumsController extends Controller
 //        $sql = 'SELECT id, album_name, description FROM albums WHERE id = :id';
 //        $album = DB::select($sql, ['id'=> $id]);
         $album = Album::find($id);
+       /* if($album->user->id !== Auth::user()->id){
+         abort(401, 'Unauthorized');
+        }*/
+
+       if(\Gate::denies('manage-album', $album)){
+           abort(401, 'Unauthorized');
+       }
         return view('albums.edit')->with('album', $album);
     }
     
@@ -81,6 +88,11 @@ class AlbumsController extends Controller
 //                  
 //                  );
           $album = Album::find($id);
+
+          if(\Gate::denies('manage-album', $album)){
+              abort(401, 'Unauthorized');
+          }
+
           $album->album_name = request()->input('name');
           $album->description = request()->input('description');
           $this->processFile($id, $request, $album);
